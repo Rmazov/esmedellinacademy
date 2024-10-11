@@ -1,0 +1,33 @@
+const express = require('express');
+const Publicacion = require('../models/Publicacion');
+const jwt = require('jsonwebtoken');
+
+const router = express.Router();
+
+// Middleware para verificar el token
+const verificarToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) return res.sendStatus(403);
+  
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+// Crear una publicación
+router.post('/', verificarToken, async (req, res) => {
+  const { titulo, contenido } = req.body;
+  const nuevaPublicacion = new Publicacion({ titulo, contenido, autorId: req.userId });
+  await nuevaPublicacion.save();
+  res.status(201).send('Publicación creada');
+});
+
+// Obtener todas las publicaciones
+router.get('/', async (req, res) => {
+  const publicaciones = await Publicacion.find().populate('autorId', 'nombre');
+  res.send(publicaciones);
+});
+
+module.exports = router;

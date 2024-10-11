@@ -1,0 +1,9 @@
+const mongoose = require('mongoose');
+
+const PublicacionSchema = new mongoose.Schema({
+  titulo: { type: String, required: true },
+  contenido: { type: String, required: true },
+  autorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
+}, { timestamps: true });
+
+module.exports = mongoose.model('Publicacion', PublicacionSchema);
