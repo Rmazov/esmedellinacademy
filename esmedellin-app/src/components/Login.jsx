@@ -29,7 +29,7 @@ function Login() {
 
       const data = await response.json();
       // Guardar el token en localStorage
-      localStorage.setItem('token', data.token);
+      sessionStorage.setItem('token', data.token);
       setSuccessMessage('Inicio de sesión exitoso');
       // Redirigir al dashboard después de autenticarse
       navigate('/dashboard');

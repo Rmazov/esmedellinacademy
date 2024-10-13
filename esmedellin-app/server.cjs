@@ -1,30 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth.cjs'); // Asegúrate de que este archivo existe
-const postRoutes = require('./routes/postRoutes.cjs'); // Importa las rutas de posts
-const cors = require('cors'); // Asegúrate de instalarlo si lo usas
-// const protectedRoutes = require('./routes/protectedRoutes.cjs'); // Si tienes rutas protegidas, importa aquí
+const authRoutes = require('./routes/auth.cjs'); // Rutas de autenticación
+const postRoutes = require('./routes/postRoutes.cjs'); // Rutas de posts
+const protectedRoutes = require('./routes/protected.cjs'); // Rutas protegidas
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
-app.use(express.json()); // Para parsear JSON
-app.use(cors()); // Permitir solicitudes de diferentes orígenes
+app.use(express.json());
+app.use(cors());
 
 // Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado a MongoDB'))
   .catch(err => console.error('No se pudo conectar a MongoDB', err));
 
 // Importar rutas
 app.use('/api/auth', authRoutes); // Rutas de autenticación
 app.use('/api/posts', postRoutes); // Rutas de posts
+app.use('/api/protected', protectedRoutes); // Rutas protegidas
 
-// Si tienes rutas protegidas, las agregarías aquí
-// app.use('/api/protected', protectedRoutes);
-
-// Middleware de manejo de errores (opcional)
+// Middleware de manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo salió mal!');

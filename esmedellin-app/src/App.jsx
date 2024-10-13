@@ -10,13 +10,22 @@ import PostList from './components/PostList';
 function App() {
   return (
     <Router>
-      <AppAppbar /> {/* Agrega el Header aquí */}
-      <PostList/>
       <Routes>
-        {/* Ruta para el Login */}
+        {/* Ruta para el Login (solo muestra Login) */}
         <Route path="/login" element={<Login />} />
-
-        {/* Ruta protegida para el dashboard */}
+        
+        {/* Ruta pública para el Home (donde se muestra AppAppbar y PostList) */}
+        <Route 
+          path="/" 
+          element={
+            <>
+              <AppAppbar /> {/* Agrega el Header aquí */}
+              <PostList /> {/* Aquí puedes incluir lo que desees mostrar */}
+            </>
+          } 
+        />
+        
+        {/* Ruta protegida para el Dashboard */}
         <Route 
           path="/dashboard" 
           element={
@@ -31,7 +40,7 @@ function App() {
 }
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('token'); // Verifica autenticación
+  const isAuthenticated = sessionStorage.getItem('token'); // Verifica autenticación
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
