@@ -1,8 +1,8 @@
-// server.cjs
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth.cjs'); // Asegúrate de que este archivo existe
+const postRoutes = require('./routes/postRoutes.cjs'); // Importa las rutas de posts
 const cors = require('cors'); // Asegúrate de instalarlo si lo usas
 // const protectedRoutes = require('./routes/protectedRoutes.cjs'); // Si tienes rutas protegidas, importa aquí
 
@@ -18,7 +18,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch(err => console.error('No se pudo conectar a MongoDB', err));
 
 // Importar rutas
-app.use('/api/auth', authRoutes); // Asegúrate de que este es el correcto
+app.use('/api/auth', authRoutes); // Rutas de autenticación
+app.use('/api/posts', postRoutes); // Rutas de posts
 
 // Si tienes rutas protegidas, las agregarías aquí
 // app.use('/api/protected', protectedRoutes);
