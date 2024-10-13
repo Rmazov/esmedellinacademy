@@ -3,9 +3,8 @@ import './App.css';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import AppAppbar from './components/AppAppbar';
-import Blog from './components/Blog';
 import PostList from './components/PostList';
-
+import SinglePost from './components/SinglePost'; // Importa el componente SinglePost
 
 function App() {
   return (
@@ -25,6 +24,17 @@ function App() {
           } 
         />
         
+        {/* Ruta para ver un solo post */}
+        <Route 
+          path="/post/:postId" 
+          element={
+            <>
+              <AppAppbar /> {/* Agrega el Header aquí también si deseas mantenerlo */}
+              <SinglePost /> {/* Componente que muestra un solo post */}
+            </>
+          } 
+        />
+
         {/* Ruta protegida para el Dashboard */}
         <Route 
           path="/dashboard" 
