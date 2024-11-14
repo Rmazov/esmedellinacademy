@@ -4,53 +4,73 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import AppAppbar from './components/AppAppbar';
 import PostList from './components/PostList';
-import SinglePost from './components/SinglePost'; // Importa el componente SinglePost
+import SinglePost from './components/SinglePost'; 
+import CreatePost from './components/CreatePost'; 
+import MainBanner from './components/MainBanner';
+import { LanguageProvider } from './components/LanguageContext'; 
+import ImageGallery from './components/ImageGallery';
+import Footer from './components/Footer';
+import Flipcard from './components/Flipcard';
+import AboutUs from './components/AboutUs';
+import Testspeech from './components/Testspeech';
+import RentaMed from './components/RentaMed';
+import CommunitySelector from './components/CommunitySelector';
 
-function App() {
+
+
+const App = () => {
   return (
-    <Router>
-      <Routes>
-        {/* Ruta para el Login (solo muestra Login) */}
-        <Route path="/login" element={<Login />} />
-        
-        {/* Ruta pública para el Home (donde se muestra AppAppbar y PostList) */}
-        <Route 
-          path="/" 
-          element={
-            <>
-              <AppAppbar /> {/* Agrega el Header aquí */}
-              <PostList /> {/* Aquí puedes incluir lo que desees mostrar */}
-            </>
-          } 
-        />
-        
-        {/* Ruta para ver un solo post */}
-        <Route 
-          path="/post/:postId" 
-          element={
-            <>
-              <AppAppbar /> {/* Agrega el Header aquí también si deseas mantenerlo */}
-              <SinglePost /> {/* Componente que muestra un solo post */}
-            </>
-          } 
-        />
+    <LanguageProvider>
+      <Router>
+        <AppAppbar /> {/* Mueve el AppAppbar aquí para que aparezca en todas las páginas */}
 
-        {/* Ruta protegida para el Dashboard */}
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard /> {/* Aquí se muestra el contenido del componente Dashboard */}
-            </ProtectedRoute>
-          } 
-        />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          
+          <Route 
+            path="/" 
+            element={
+              <>
+                <MainBanner /> {/* Solo aparecerá en la página principal */}
+                <CommunitySelector />
+                <AboutUs />
+                
+                <RentaMed/>
+                <Flipcard />
+                
+              </>
+            } 
+          />
+          
+          <Route path="/:slug" element={<SinglePost />} /> {/* Cambiado aquí */}
+
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/create-post" 
+            element={
+              <ProtectedRoute>
+                <CreatePost />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+
+         {/* Footer al final para que se muestre en todas las páginas */}
+      </Router>
+    </LanguageProvider>
   );
-}
+};
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = sessionStorage.getItem('token'); // Verifica autenticación
+  const isAuthenticated = sessionStorage.getItem('token'); 
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 

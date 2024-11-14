@@ -12,6 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Sitemark from './SitemarkIcon';
+import LanguageSelector from './LanguageSelector';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -50,9 +51,7 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small">
                 Testimonials
               </Button>
-              <Button variant="text" color="info" size="small">
-                Highlights
-              </Button>
+              
               <Button variant="text" color="info" size="small">
                 Pricing
               </Button>
@@ -61,6 +60,9 @@ export default function AppAppBar() {
               </Button>
               <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
                 Blog
+              </Button>
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <LanguageSelector />
               </Button>
             </Box>
           </Box>
@@ -102,6 +104,7 @@ export default function AppAppBar() {
                 <MenuItem>Pricing</MenuItem>
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem>
+                <LanguageSelector />
                 <MenuItem>
                   <Button color="primary" variant="contained" fullWidth>
                     Sign up

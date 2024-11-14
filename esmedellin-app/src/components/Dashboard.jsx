@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // Inicializa useNavigate
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -74,6 +76,7 @@ const Dashboard = () => {
       <h1>Bienvenido al Dashboard</h1>
       {loading && <p>Cargando usuarios...</p>}
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      
       <h2>Lista de Usuarios</h2>
       <ul>
         {usuarios.map((usuario) => (
@@ -115,6 +118,9 @@ const Dashboard = () => {
         </div>
         <button type="submit">Crear Usuario</button>
       </form>
+
+      {/* Botón para crear un nuevo post */}
+      <button onClick={() => navigate('/create-post')}>Crear Nuevo Post</button>
     </div>
   );
 };

@@ -9,6 +9,7 @@ router.post('/', async (req, res) => {
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (error) {
+    console.error(error); // Agrega esta línea para ver errores en la consola
     res.status(400).json({ error: error.message });
   }
 });
@@ -27,6 +28,17 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post no encontrado' });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Obtener un post por slug (nueva ruta)
+router.get('/slug/:slug', async (req, res) => {
+  try {
+    const post = await Post.findOne({ slug: req.params.slug });
     if (!post) return res.status(404).json({ message: 'Post no encontrado' });
     res.status(200).json(post);
   } catch (error) {

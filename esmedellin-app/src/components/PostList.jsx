@@ -1,10 +1,9 @@
-// PostList.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import { Box, Card, CardMedia, CardContent, Typography, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import LanguageSelector from './LanguageSelector';
+import { useLanguage } from './LanguageContext'; // Usar el contexto
 
 const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -20,7 +19,7 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const { selectedLanguage } = useLanguage(); // Usar el contexto
 
   const navigate = useNavigate(); 
 
@@ -28,7 +27,7 @@ const PostList = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get('https://esmedellin.com/api/posts'); 
-        setPosts(response.data.slice(-2)); 
+        setPosts(response.data.slice(0, 2)); 
       } catch (err) {
         setError('Error fetching posts');
       } finally {
@@ -39,14 +38,9 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
-  const handlePostClick = (postId) => {
-    // Almacena el idioma en el local storage antes de navegar
+  const handlePostClick = (slug) => {
     localStorage.setItem('selectedLanguage', selectedLanguage);
-    navigate(`/post/${postId}`); 
-  };
-
-  const handleLanguageChange = (event) => {
-    setSelectedLanguage(event.target.value);
+    navigate(`/${slug}`); // Cambiado a usar slug
   };
 
   if (loading) {
@@ -59,11 +53,10 @@ const PostList = () => {
 
   return (
     <Box sx={{ flexGrow: 1, padding: 2 }}>
-      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={handleLanguageChange} />
       <Grid container spacing={2}>
         {posts.map((post) => (
-          <Grid item xs={12} sm={6} md={6} key={post._id}>
-            <StyledCard onClick={() => handlePostClick(post._id)}>
+          <Grid item xs={12} sm={6} md={6} key={post._id} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <StyledCard onClick={() => handlePostClick(post.slug)}> {/* Usando post.slug aquí */}
               <CardMedia
                 component="img"
                 alt={post.title[selectedLanguage]}

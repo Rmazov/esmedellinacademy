@@ -1,0 +1,71 @@
+/* AboutUs.module.css */
+
+.container {
+  background-color: #f9f9f9; /* Soft background color */
+  border-radius: 8px; /* Rounded borders */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for a depth effect */
+  width: 100%; /* Full width of the screen */
+}
+
+.title {
+  font-size: 2rem; /* Font size for the title */
+  margin-bottom: 20px; /* Bottom margin */
+  color: #333; /* Text color */
+  text-align: center; /* Center the title */
+}
+
+.content {
+  display: flex; /* Flexbox for columns */
+  flex-wrap: wrap; /* Allow columns to wrap */
+  justify-content: center; /* Center the content */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.imageContainer {
+  flex: 1; /* Image column will occupy a proportional space */
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center; /* Center vertically */
+  padding-right: 5px; /* Space on the right */
+}
+
+.textColumn {
+  flex: 1; /* Text column will occupy the same space */
+  padding-left: 5px; /* Space on the left */
+}
+
+/* Adjustments for small screens */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column; /* Stack columns vertically */
+    align-items: center; /* Center align items */
+  }
+
+  .imageContainer {
+    padding-right: 0; /* Remove right padding */
+    padding-bottom: 20px; /* Add bottom padding */
+  }
+
+  .textColumn {
+    padding-left: 0; /* Remove left padding */
+  }
+}
+
+.image {
+  width: 100%; /* The image will take up 100% of the column width */
+  max-width: 400px; /* Maximum width for the image */
+  border-radius: 8px; /* Rounded borders */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.subTitle {
+  font-size: 1.5rem; /* Font size for subtitles */
+  margin-top: 20px; /* Top margin */
+  color: #444; /* Subtitle color */
+}
+
+.description {
+  font-size: 1rem; /* Font size for description */
+  color: #666; /* Lighter color for description */
+  line-height: 1.5; /* Line spacing */
+}
